@@ -117,7 +117,9 @@ const App: React.FC = () => {
     setIsSpeaking(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+      if (!apiKey) throw new Error("API_KEY_MISSING");
+      const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash-preview-tts",
         contents: [{ parts: [{ text }] }],
@@ -170,7 +172,11 @@ const App: React.FC = () => {
     setIsProcessing(true);
     
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+      if (!apiKey) {
+        throw new Error("API_KEY_MISSING");
+      }
+      const ai = new GoogleGenAI({ apiKey });
 
       const changeNameTool: FunctionDeclaration = {
         name: "changeAiName",
@@ -215,6 +221,10 @@ const App: React.FC = () => {
       console.error(e);
       let errorMsg = "Network glitch Boss. Please repeat? 🫡";
       
+      if (e.message === "API_KEY_MISSING") {
+        errorMsg = "Boss, API Key missing hai. Please settings mein check karein. 🫡";
+      }
+
       // Handle Quota error gracefully in chat
       const isQuotaError = e.message?.includes('429') || JSON.stringify(e).includes('RESOURCE_EXHAUSTED');
       if (isQuotaError) {
@@ -244,7 +254,9 @@ const App: React.FC = () => {
     setMessages(prev => [...prev, { id, role: 'assistant', content: 'Generating visuals Boss... ✨', status: 'processing', type: 'image', timestamp: Date.now() }]);
     setIsProcessing(true);
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+      if (!apiKey) throw new Error("API_KEY_MISSING");
+      const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
         model: 'gemini-3-pro-image-preview',
         contents: { parts: [{ text: `High quality cinematic art, beautiful and detailed: ${prompt}` }] },
@@ -284,7 +296,9 @@ const App: React.FC = () => {
      handleSpeech("Video render kar rahi hoon Boss...");
      
      try {
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+        if (!apiKey) throw new Error("API_KEY_MISSING");
+        const ai = new GoogleGenAI({ apiKey });
         let operation = await ai.models.generateVideos({
             model: 'veo-3.1-fast-generate-preview',
             prompt: prompt,
@@ -302,7 +316,8 @@ const App: React.FC = () => {
 
         const downloadLink = operation.response?.generatedVideos?.[0]?.video?.uri;
         if (downloadLink) {
-             const videoUrl = `${downloadLink}&key=${process.env.API_KEY}`;
+             const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+             const videoUrl = `${downloadLink}&key=${apiKey}`;
              setMessages(prev => prev.map(m => m.id === id ? { ...m, status: 'completed', mediaUrl: videoUrl, content: `Video ready Boss. 🫡` } : m));
              handleSpeech(`Dekhiye Boss.`);
         } else {

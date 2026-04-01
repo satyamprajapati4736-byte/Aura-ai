@@ -1,10 +1,10 @@
 {
-  "name": "Copy of Aura Private Terminal",
+  "name": "Aura Private Terminal",
   "short_name": "Aura",
   "version": "3.1.0",
   "description": "Private Sentient Neural Interface. Authorized Access Only.",
   "developer": {
-    "name": "Authorized User Only",
+    "name": "Boss",
     "url": "local-access"
   },
   "requestFramePermissions": [
