@@ -1,0 +1,33 @@
+
+{
+  "name": "Aura Private Terminal",
+  "short_name": "Aura",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#000d0a",
+  "theme_color": "#10b981",
+  "description": "Private Sentient Neural Interface. Authorized Access Only.",
+  "orientation": "portrait",
+  "categories": ["personalization", "lifestyle"],
+  "icons": [
+    {
+      "src": "https://images.unsplash.com/photo-1614283233556-f35b0c801efc?auto=format&fit=crop&q=80&w=192&h=192",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1614283233556-f35b0c801efc?auto=format&fit=crop&q=80&w=512&h=512",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Quick Neural Sync",
+      "url": "/",
+      "icons": [{ "src": "https://images.unsplash.com/photo-1614283233556-f35b0c801efc?auto=format&fit=crop&q=80&w=96&h=96", "sizes": "96x96" }]
+    }
+  ]
+}
